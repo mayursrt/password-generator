@@ -31,13 +31,15 @@ Create strong Passwords to protect your accounts
 #----------------------------------------------------------------------------------------------------------------------------
 # User Input
 
-pass_len = st.number_input('Select your password length', min_value=4, max_value=128, value=8)
+col1, col2 = st.beta_columns([1,1])
+
+pass_len = col1.number_input('Select your password length', min_value=4, max_value=128, value=8)
+col2.empty()
 
 cb_lower = st.checkbox('Include Lowercase Characters (eg. abcdef)', value=True)
 cb_upper = st.checkbox('Include Uppercase Characters (eg. ABCDEF)', value=True)
 cb_digit = st.checkbox('Include Digits (eg. 12345)', value=True)
 cb_special = st.checkbox('Include Special Characters (eg. !@#$%)', value=True)
-
 #----------------------------------------------------------------------------------------------------------------------------
 
 
@@ -72,32 +74,39 @@ def generate_password(len):
         password += random.choice(chars)
     return password
 
-btn_gen = st.button('Generate')
+col1, col2, col3, col4 = st.beta_columns([1,1,5,5])
+
+btn_gen = col1.button('Generate')
+btn_gen_cpy = col3.button('Generate & Copy to clipboard')
 
 pass_gen = ''
+flag = 0
 
 if not chars:
     st.error('Please Select atleast one option')
 else:
     if btn_gen:
         pass_gen = generate_password(pass_len)
-        #pyperclip.copy(pass_gen)
-        st.text_area('Here is your password:',value=pass_gen)
-        st.success('Password Generated and Copied to clipboard')
+        flag = 1
+    elif btn_gen_cpy:
+        pass_gen = generate_password(pass_len)
+        pyperclip.copy(pass_gen)
+        flag = 2
 
-
-
-
+st.text_area('Generated password:',value=pass_gen)
+if flag==1:
+    st.success('Password Generated')
+elif flag==2:
+    st.success('Password Generated and Copied to clipboard')
 #----------------------------------------------------------------------------------------------------------------------------
-
 
 
 #---------------------------------------------------------------------------------------------------------------------------
 # Footer
-#MainMenu {visibility: hidden;}
+
 
 footer="""<style>
-
+#MainMenu {visibility: hidden;}
 
 a:link , a:visited{
 color: black;
