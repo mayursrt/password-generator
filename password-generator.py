@@ -3,6 +3,9 @@
 import streamlit as st
 import random
 import tkinter
+import string
+import pyperclip
+from PIL import Image
 #----------------------------------------------------------------------------------------------------------------------------
 
 
@@ -11,10 +14,10 @@ import tkinter
 # Title and Logo
 title_container = st.beta_container()
 col1, col2 = st.beta_columns([1, 5])
-# image = Image.open('assets/logo.jpg')
+image = Image.open('assets/logo.jpg')
 with title_container:
-    # with col1:
-       # st.image(image)
+    with col1:
+       st.image(image)
     with col2:
         st.title('Password Generator')
         st.markdown("""
@@ -26,18 +29,35 @@ Create strong Passwords to protect your accounts
 
 
 #----------------------------------------------------------------------------------------------------------------------------
-# Body
-chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!@$%^&*()#.,?0123456789'
-#----------------------------------------------------------------------------------------------------------------------------
-
-
-
-#----------------------------------------------------------------------------------------------------------------------------
 # User Input
 
-pass_len = st.number_input('Enter password Length', min_value=4, max_value=50)
-st.write(pass_len)
+pass_len = st.number_input('Select your password length', min_value=4, max_value=128, value=8)
 
+cb_lower = st.checkbox('Include Lowercase Characters (eg. abcdef)', value=True)
+cb_upper = st.checkbox('Include Uppercase Characters (eg. ABCDEF)', value=True)
+cb_digit = st.checkbox('Include Digits (eg. 12345)', value=True)
+cb_special = st.checkbox('Include Special Characters (eg. !@#$%)', value=True)
+
+#----------------------------------------------------------------------------------------------------------------------------
+
+
+
+#----------------------------------------------------------------------------------------------------------------------------
+# Body
+
+chars = ''
+
+if cb_lower:
+    chars += string.ascii_lowercase
+
+if cb_upper:
+    chars += string.ascii_uppercase
+
+if cb_digit:
+    chars += string.digits
+
+if cb_special:
+    chars += string.punctuation
 
 #----------------------------------------------------------------------------------------------------------------------------
 
@@ -52,21 +72,33 @@ def generate_password(len):
         password += random.choice(chars)
     return password
 
-gen = st.button('Generate')
-st.subheader('Here is your password:')
-if gen:
-    st.write(generate_password(pass_len))
+btn_gen = st.button('Generate')
+
+pass_gen = ''
+
+if not chars:
+    st.error('Please Select atleast one option')
+else:
+    if btn_gen:
+        pass_gen = generate_password(pass_len)
+        #pyperclip.copy(pass_gen)
+        st.text_area('Here is your password:',value=pass_gen)
+        st.success('Password Generated and Copied to clipboard')
+
+
+
+
 #----------------------------------------------------------------------------------------------------------------------------
 
 
 
 #---------------------------------------------------------------------------------------------------------------------------
 # Footer
-
+#MainMenu {visibility: hidden;}
 
 footer="""<style>
 
-#MainMenu {visibility: hidden;}
+
 a:link , a:visited{
 color: black;
 background-color: transparent;
@@ -100,5 +132,5 @@ st.markdown(footer,unsafe_allow_html=True)
 
 
 
-############################################################################################################################# 
+#############################################################################################################################
 #############################################################################################################################
