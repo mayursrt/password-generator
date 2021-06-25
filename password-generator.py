@@ -2,7 +2,6 @@
 # Imports
 import streamlit as st
 import random
-import tkinter
 import string
 import pyperclip
 from PIL import Image
@@ -24,7 +23,6 @@ with title_container:
 Create strong Passwords to protect your accounts
 
 """)
-
 #----------------------------------------------------------------------------------------------------------------------------
 
 
@@ -47,7 +45,6 @@ cb_special = st.checkbox('Include Special Characters (eg. !@#$%)', value=True)
 
 #----------------------------------------------------------------------------------------------------------------------------
 # Body
-
 chars = ''
 
 if cb_lower:
@@ -61,14 +58,12 @@ if cb_digit:
 
 if cb_special:
     chars += string.punctuation
-
 #----------------------------------------------------------------------------------------------------------------------------
 
 
 
 #----------------------------------------------------------------------------------------------------------------------------
 # Main Function
-
 def generate_password(len):
     password = ''
     for pwd in range(len):
@@ -107,15 +102,12 @@ elif flag==2:
 #----------------------------------------------------------------------------------------------------------------------------
 # Links
 st.write('')
-st.markdown(f"To check if your password is safe from data breaches visit this <a href='https://password-check.herokuapp.com/'>Password Checker</a>.", unsafe_allow_html=True)
-
+st.markdown(f"To check if your password is safe from hackers and data breaches visit this <a href='https://password-check.herokuapp.com/'>Password Checker</a>.", unsafe_allow_html=True)
 #---------------------------------------------------------------------------------------------------------------------------
 
 
 #---------------------------------------------------------------------------------------------------------------------------
 # Footer
-
-
 footer="""<style>
 #MainMenu {visibility: hidden;}
 
