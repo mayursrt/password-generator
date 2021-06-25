@@ -24,13 +24,14 @@ with title_container:
 Create strong Passwords to protect your accounts
 
 """)
+
 #----------------------------------------------------------------------------------------------------------------------------
 
 
 
 #----------------------------------------------------------------------------------------------------------------------------
 # User Input
-
+st.write('')
 col1, col2 = st.beta_columns([1,1])
 
 pass_len = col1.number_input('Select your password length', min_value=4, max_value=128, value=8)
@@ -93,12 +94,22 @@ else:
         pyperclip.copy(pass_gen)
         flag = 2
 
+st.write('')
 st.text_area('Generated password:',value=pass_gen)
 if flag==1:
     st.success('Password Generated')
 elif flag==2:
     st.success('Password Generated and Copied to clipboard')
 #----------------------------------------------------------------------------------------------------------------------------
+
+
+
+#----------------------------------------------------------------------------------------------------------------------------
+# Links
+st.write('')
+st.markdown(f"To check if your password is safe from data breaches visit this <a href='https://password-check.herokuapp.com/'>Password Checker</a>.", unsafe_allow_html=True)
+
+#---------------------------------------------------------------------------------------------------------------------------
 
 
 #---------------------------------------------------------------------------------------------------------------------------
