@@ -3,7 +3,6 @@
 import streamlit as st
 import random
 import string
-import pyperclip
 from PIL import Image
 #----------------------------------------------------------------------------------------------------------------------------
 
@@ -73,7 +72,6 @@ def generate_password(len):
 col1, col2, col3, col4 = st.beta_columns([1,1,5,5])
 
 btn_gen = col1.button('Generate')
-btn_gen_cpy = col3.button('Generate & Copy to clipboard')
 
 pass_gen = ''
 flag = 0
@@ -84,17 +82,11 @@ else:
     if btn_gen:
         pass_gen = generate_password(pass_len)
         flag = 1
-    elif btn_gen_cpy:
-        pass_gen = generate_password(pass_len)
-        pyperclip.copy(pass_gen)
-        flag = 2
-
+        
 st.write('')
 st.text_area('Generated password:',value=pass_gen)
 if flag==1:
     st.success('Password Generated')
-elif flag==2:
-    st.success('Password Generated and Copied to clipboard')
 #----------------------------------------------------------------------------------------------------------------------------
 
 
